@@ -24,7 +24,7 @@ GLFWwindow* window = 0;
 const uint32
     WINDOW_WIDTH = 1440,
     WINDOW_HEIGHT = 810,
-    OBJECT_COUNT = 280;
+    OBJECT_COUNT = 1000;
 
 GLuint shaderProgramId, vao, vbo, ubo;
 
@@ -53,15 +53,15 @@ struct Texture { uint16 width, height; float u1, v1, u2, v2; };
 struct Object { uint16 x, y; Texture texture; };
 
 Texture
-    watermelon = { 128, 128, 0.0f, 0.0f, 0.5f, 0.5f },
-    pineapple  = { 128, 128, 0.5f, 0.0f, 1.0f, 0.5f },
-    orange     = { 64, 64, 0.0f, 0.5f, 0.25f, 0.75f },
-    grapes     = { 64, 64, 0.25f, 0.5f, 0.5f, 0.75f },
-    pear       = { 64, 64, 0.0f, 0.75f, 0.25f, 1.0f },
-    banana     = { 64, 64, 0.25f, 0.75f, 0.5f, 1.0f },
-    strawberry = { 32, 32, 0.5f, 0.5f, 0.625f, 0.625f },
-    raspberry  = { 32, 32, 0.625f, 0.5f, 0.75f, 0.625f },
-    cherries   = { 32, 32, 0.5f, 0.625f, 0.625f, 0.75f };
+    watermelon = { 64, 64, 0.0f, 0.0f, 0.5f, 0.5f },
+    pineapple  = { 64, 64, 0.5f, 0.0f, 1.0f, 0.5f },
+    orange     = { 32, 32, 0.0f, 0.5f, 0.25f, 0.75f },
+    grapes     = { 32, 32, 0.25f, 0.5f, 0.5f, 0.75f },
+    pear       = { 32, 32, 0.0f, 0.75f, 0.25f, 1.0f },
+    banana     = { 32, 32, 0.25f, 0.75f, 0.5f, 1.0f },
+    strawberry = { 16, 16, 0.5f, 0.5f, 0.625f, 0.625f },
+    raspberry  = { 16, 16, 0.625f, 0.5f, 0.75f, 0.625f },
+    cherries   = { 16, 16, 0.5f, 0.625f, 0.625f, 0.75f };
 
 Texture textures[9] = { watermelon, pineapple, orange, grapes, pear, banana, strawberry, cherries, raspberry };
 
@@ -129,7 +129,7 @@ int32 main()
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
     int32 imageWidth, imageHeight;
-    unsigned char* image = SOIL_load_image("texture.png", &imageWidth, &imageHeight, 0, SOIL_LOAD_RGBA);
+    unsigned char* image = SOIL_load_image("assets/texture.png", &imageWidth, &imageHeight, 0, SOIL_LOAD_RGBA);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageWidth, imageHeight, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
 
     if (image == 0)
@@ -140,40 +140,11 @@ int32 main()
     else
         SOIL_free_image_data(image);
 
-    int x = 40;
     // prepare objects, transfer them to buffers
-    for (uint16 i = 0; i < x; i++)
+    for (uint16 i = 0; i < OBJECT_COUNT; i++)
     {
-        Texture t = textures[rand() % 2];
-        t.width /= 2;
-        t.height /= 2;
+        Texture t = textures[rand() % 9];
         objects[i] =
-        {
-            rand() % (WINDOW_WIDTH - t.width),
-            rand() % (WINDOW_HEIGHT - t.height),
-            t
-        };
-    }
-
-    for (uint16 i = 0; i < x * 2; i++)
-    {
-        Texture t = textures[rand() % 4 + 2];
-        t.width /= 2;
-        t.height /= 2;
-        objects[x + i] =
-        {
-            rand() % (WINDOW_WIDTH - t.width),
-            rand() % (WINDOW_HEIGHT - t.height),
-            t
-        };
-    }
-
-    for (uint16 i = 0; i < x * 4; i++)
-    {
-        Texture t = textures[rand() % 3 + 6];
-        t.width /= 2;
-        t.height /= 2;
-        objects[3 * x + i] =
         {
             rand() % (WINDOW_WIDTH - t.width),
             rand() % (WINDOW_HEIGHT - t.height),
