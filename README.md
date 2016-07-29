@@ -9,5 +9,6 @@ Loads one texture and uses it to render several sprites multiple thousand times 
 - [x] basic logic of buffers etc.
 - [x] updating vertex buffer, allowing to move objects
 
-#License
+#License and dependencies
+MIT license (see file LICENSE for copy).
 Project uses GLFW, GLEW and SOIL but non of them are included here. [Fruit icons](http://www.flaticon.com/packs/gastronomy-set).
