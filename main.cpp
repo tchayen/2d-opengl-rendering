@@ -33,8 +33,8 @@ const uint32
 GLuint shaderProgramId, vao, vbo, ubo, textureId;
 
 // in order to avoid sending information to shaders screen resolution is hard coded
-// (precisely, half of it in each dimension), but it should be unnoticable in when
-// extracted to shader uniform
+// (precisely, half of it in each dimension), but it should be unnoticable in performance
+// after extracting to shader uniform
 const char *vertexShader =
     "#version 330\n"
     "layout (location = 0) in vec2 vert;\n"
