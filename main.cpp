@@ -1,16 +1,17 @@
+// needed for printf(), and rand(), they are not required
 #include <cstdio>
 #include <cstdlib>
 #include <ctime>
 
-// you will need your own OpenGL bindings, GLFW (or other lib capable of creating
-// window and OpenGL context) and SOIL (or, again, other lib loading images in
-// format of your choice)
+// you will need your own OpenGL bindings, GLFW (or other lib capable of
+// creating window and OpenGL context) and SOIL (or, again, other lib loading
+// images in format of your choice)
 #include "glew-1.9.0\glew.h"
 #include "glfw-3.2\glfw3.h"
 #include "soil-1.16\SOIL.h"
 
-// not necessary but makes my life much easier when I can just see the number of
-// bits and I dont have to write 'unsigned' as a separate word
+// not necessary but makes my life much easier when I can just see the number
+// of bits and I dont have to write 'unsigned' as a separate word
 typedef short              int16;
 typedef int                int32;
 typedef unsigned short     uint16;
@@ -25,16 +26,16 @@ GLFWwindow* window;
 const uint32
     WINDOW_WIDTH = 1440,
     WINDOW_HEIGHT = 810,
-    // object count is static number in this example, but it can be made a bit more
-    // flexible (however remember that you will never have much freedom with constant
-    // block of memory which is required by targeted performance)
+    // object count is static number in this example, but it can be made a bit
+    // more flexible (however remember that you will never have much freedom
+    // with constant block of memory which is required by targeted performance)
     OBJECT_COUNT = 100;
 
 GLuint shaderProgramId, vao, vbo, ubo, textureId;
 
-// in order to avoid sending information to shaders screen resolution is hard coded
-// (precisely, half of it in each dimension), but it should be unnoticable in performance
-// after extracting to shader uniform
+// in order to avoid sending information to shaders screen resolution is hard
+// coded (precisely, half of it in each dimension), but it should be
+// unnoticable in performance after extracting to shader uniform
 const char *vertexShader =
     "#version 330\n"
     "layout (location = 0) in vec2 vert;\n"
@@ -194,8 +195,23 @@ int32 main()
     // load image using SOIL and store it on GPU
     {
         int32 width, height;
-        unsigned char* image = SOIL_load_image("texture.png", &width, &height, 0, SOIL_LOAD_RGBA);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+        unsigned char* image = SOIL_load_image(
+            "texture.png",
+            &width,
+            &height,
+            0,
+            SOIL_LOAD_RGBA);
+
+        glTexImage2D(
+            GL_TEXTURE_2D,
+            0,
+            GL_RGBA,
+            width,
+            height,
+            0,
+            GL_RGBA,
+            GL_UNSIGNED_BYTE,
+            image);
 
         if (image == 0)
         {
@@ -293,7 +309,8 @@ int32 main()
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
-    // those usually go to render(), but because this example uses one shader, vao and texture it is enough to set them once
+    // those usually go to render(), but this example uses just one shader, vao
+    // and texture so it is enough to set them once
     glUseProgram(shaderProgramId);
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, textureId);
@@ -313,8 +330,8 @@ int32 main()
         double frameTime = newTime - currentTime;
         currentTime = newTime;
 
-        // print frame time
-        // if you want to get rid of that remember to also delete lastPrinted variable above
+        // print frame time (if you want to get rid of that remember to also
+        // delete lastPrinted variable above
         if (currentTime - lastPrinted > 1.0)
         {
             printf("%fms\n", frameTime * 1000.0);
@@ -345,7 +362,12 @@ int32 main()
     return 0;
 }
 
-void key_callback(GLFWwindow* window, int key, int32 scancode, int32 action, int32 mode)
+void key_callback(
+    GLFWwindow* window,
+    int key,
+    int32 scancode,
+    int32 action,
+    int32 mode)
 {
     if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
         glfwSetWindowShouldClose(window, GL_TRUE);
