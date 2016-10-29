@@ -1,4 +1,4 @@
-#2d_opengl_renderer
+#2d-opengl-renderer
 Minimal, fast OpenGL renderer for 2D sprites
 
 ![Screenshot 1](https://raw.githubusercontent.com/Tchayen/2d_opengl_renderer/master/screenshot1.png)
